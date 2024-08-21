@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Recommendation Form</title>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const jobTitle = document.getElementById('job_title').value;
+            try {
+                const response = await fetch('http://localhost:5000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ job_title: jobTitle })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const recommendations = await response.json();
+                displayRecommendations(recommendations);
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+
+        function displayRecommendations(recommendations) {
+            const resultDiv = document.getElementById('results');
+            resultDiv.innerHTML = ''; // Clear previous results
+
+            if (recommendations.length === 0) {
+                resultDiv.innerHTML = '<p>No recommendations found.</p>';
+                return;
+            }
+
+            const list = document.createElement('ul');
+            recommendations.forEach(rec => {
+                const item = document.createElement('li');
+                item.innerHTML = `<strong>Job Title:</strong> ${rec.JD_tokens_str} <br>
+                                  <strong>Location:</strong> ${rec.Location} <br>
+                                  <strong>Average Salary:</strong> ${rec['Average Salary']} <br>
+                                  <strong>Industry:</strong> ${rec.Industry_tokens.join(', ')} <br>
+                                  <strong>Similarity Score:</strong> ${rec.similarity_score.toFixed(2)}<br><br>`;
+                list.appendChild(item);
+            });
+            resultDiv.appendChild(list);
+        }
+    </script>
+</head>
+<body>
+    <h1>Job Recommendation Form</h1>
+    <form id="testForm" onsubmit="submitForm(event)">
+        <label for="job_title">Job Title:</label>
+        <input type="text" id="job_title" name="job_title" required>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="results"></div>
+</body>
+</html>
+
