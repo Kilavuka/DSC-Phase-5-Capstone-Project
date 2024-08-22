@@ -12,7 +12,7 @@
      - **notebooks/**: https://github.com/Kilavuka/DSC-Phase-5-Capstone-Project/blob/main/notebook.ipynb
      - **ppt/**: https://github.com/Kilavuka/DSC-Phase-5-Capstone-Project/blob/main/Job%20Recommender%20presentation.pptx
      - **src/**: https://github.com/Kilavuka/DSC-Phase-5-Capstone-Project/blob/main/svd_job_title_model.pkl
-     - **weblink/**:https://jobrecommenderapp.azurewebsites.net/
+     - **weblink/**: https://jobrecommenderapp.azurewebsites.net/
      - **README.md**: Documentation for the project.
 
 ## 4. **Requirements**:
