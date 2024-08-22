@@ -5,7 +5,7 @@ import pandas as pd
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)  # CORS for all routes
 
 # Load models and data
 tfidf_job_title_model = joblib.load('tfidf_job_title_model.pkl')
@@ -35,4 +35,7 @@ def predict():
     return jsonify(top_recommendations.to_dict(orient='records'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    #flask deployment
+    #app.run(debug=True, port=5000)
+    #azure deployment
+    app.run(host='0.0.0.0', port=8000)
